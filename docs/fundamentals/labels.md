@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Labels
-parent: UI Components
+parent: Fundamentals
 nav_order: 3
 ---
 
@@ -27,6 +27,7 @@ Coming soon
 
 Deprecated
 {: .label .label-red }
+
 </div>
 ```markdown
 Default label
@@ -46,4 +47,7 @@ Coming soon
 
 Deprecated
 {: .label .label-red }
+
+```
+
 ```
