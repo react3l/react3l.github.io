@@ -19,9 +19,13 @@ Focus on building awesome apps with well-structured code.
 
 ## Getting started
 
-### Dependencies
+### Prerequisites
 
-Just the Docs is built for [Jekyll](https://jekyllrb.com), a static site generator. View the [quick start guide](https://jekyllrb.com/docs/) for more information. Just the Docs requires no special plugins and can run on GitHub Pages' standard Jekyll compiler. The [Jekyll SEO Tag plugin](https://github.com/jekyll/jekyll-seo-tag) is included by default (no need to run any special installation) to inject SEO and open graph metadata on docs pages. For information on how to configure SEO and open graph metadata visit the [Jekyll SEO Tag usage guide](https://jekyll.github.io/jekyll-seo-tag/usage/).
+React3L is built for well-structured React projects, which has its own requirements:
+- You must use Typescript.
+- You should enable decorators support, especially if you are using Babel
+- You must be familiar with React Hook APIs
+- You should have the mindset of clean code
 
 ### Quick start
 
@@ -70,15 +74,11 @@ yarn add -D react3l-i18next-extractor
 mkdir -p src/i18n/en src/i18n/vi
 ```
 
-### Configure React3L
-
-- [See configuration options]({{ site.baseurl }}{% link docs/configuration.md %})
-
 ---
 
 ## About the project
 
-Just the Docs is &copy; 2017-{{ "now" | date: "%Y" }} by [Patrick Marsceill](http://patrickmarsceill.com).
+React3L is &copy; 2020-{{ "now" | date: "%Y" }} by [thanhtunguet](https://thanhtunguet.github.io).
 
 ### License
 
@@ -87,9 +87,9 @@ Distributed by an [MIT license](https://github.com/react3l/react3l/tree/master/L
 ### Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change. Read more about becoming a contributor in [our GitHub repo](https://github.com/pmarsceill/just-the-docs#contributing).
+email, or any other method with the owners of this repository before making a change. Read more about becoming a contributor in [our GitHub repo](https://github.com/react3l/react3l#contributing).
 
-#### Thank you to the contributors of Just the Docs!
+#### Thank you to the contributors of React3L!
 
 <ul class="list-style-none">
 {% for contributor in site.github.contributors %}

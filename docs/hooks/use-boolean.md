@@ -19,6 +19,20 @@ parent: Hooks
 
 ## Purpose
 
+Managing "loading" state of a component is very common task in React projects. For every state in every component, you have to call the `useState` hook, then create from 1 to 3 callbacks to change the state.
+See the example code:
+
+```tsx
+function ExampleComponent() {
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const handleToggleState = React.useCallback(() => {
+    setLoading(!loading);
+  }, [loading]);
+  // ...
+}
+```
+
 `useBoolean` is implemented to help you handle boolean state easily without writing callbacks.
 
 ## Usage
@@ -38,4 +52,16 @@ function useCustomHook() {
     setFalse,
   ] = useBoolean(false)
 }
+```
+
+## Example
+The `isVisible` state of a modal
+
+```tsx
+const [
+  isVisible, 
+  toggleModal,
+  openModal,
+  closeModal,
+] = useBoolean(false);
 ```

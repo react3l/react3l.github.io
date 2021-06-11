@@ -25,7 +25,7 @@ If you subscribe to an observable in React component lifecycle, you have to clea
 
 ## Usage
 
-### Call in pure useEffect
+### Using pure effect
 
 ```ts
 import { Observable, Subscription } from "rxjs"
@@ -49,7 +49,7 @@ function useCustomHook() {
 }
 ```
 
-### Call with useEffectSubscription
+### Using useEffectSubscription
 
 ```ts
 import { useEffectSubscription } from "react3l-common"

@@ -4,15 +4,36 @@ title: useTimeout
 parent: Hooks
 ---
 
-# Responsive modifiers
+# Timeout Hook
 
-Just the Docs spacing works in conjunction with a variety of modifiers that allow you to target specific screen sizes responsively. Use these in conjunction with spacing and display prefix and suffix classes.
+{: .no_toc }
 
-| Modifier | Screen size                         |
-| :------- | :---------------------------------- |
-| (none)   | All screens until the next modifier |
-| `xs`     | 320px (20rem) and up                |
-| `sm`     | 500px (31.25rem) and up             |
-| `md`     | 740px (46.25rem) and up             |
-| `lg`     | 1120px (70rem) and up               |
-| `xl`     | 1400px (87.5rem) and up             |
+## Table of contents
+
+{: .no_toc .text-delta }
+
+1. TOC
+   {:toc}
+
+---
+
+## Create and manage timeouts
+
+Similar to [useInterval](../use-interval/), if you need a component that has an timeout during its lifecycle. `useTimeout` is created  for you.
+
+For example: Mark something expired after `x` seconds
+
+```tsx
+function ExampleComponent() {
+   const [expired, setExpired] = React.useState<boolean>(false);
+
+   useInterval(
+      () => {
+         setExpired(true);
+      },
+      10000,
+   );
+}
+```
+
+You don't have to care about calling `clearTimeout`
