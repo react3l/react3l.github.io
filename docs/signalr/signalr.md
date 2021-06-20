@@ -73,7 +73,7 @@ Use the `configureLogging` method on `HubConnectionBuilder` to configure the log
 ### Reconnect clients
 After to 3.0, the JavaScript client for SignalR automatically reconnect with using `withAutomaticReconnect`. You don't must write code that will reconnect your client manually.
 
-# For example
+## For example
 1. Create a connection
 ```ts
 // Connect, using the token we got.
@@ -90,6 +90,5 @@ After to 3.0, the JavaScript client for SignalR automatically reconnect with usi
     .withAutomaticReconnect() //will automatically try to reconnect
     .build();
 ```
-2. 
 
-# Some common mistakes
+## Some common mistakes
