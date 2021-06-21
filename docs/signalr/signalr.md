@@ -76,6 +76,8 @@ After to 3.0, the JavaScript client for SignalR automatically reconnect with usi
 ## For example
 1. Create a connection
 ```ts
+import * as signalR from '@microsoft/signalr';
+
 // Connect, using the token we got.
   let connection = new signalR.HubConnectionBuilder()
     .withUrl(connectionHub, options),
