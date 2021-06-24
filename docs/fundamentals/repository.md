@@ -91,10 +91,11 @@ Phần này gồm nhiều thông số quan trọng như
 }
 ```
 ### Sử dụng
-1. *Bước 1:* Config các thông điệp Response và Request
+
+1. *Bước 1:* Config Header của các thông điệp Response và Request
 * Bước này sẽ sử dụng các config có trong axios để định nghĩa các thông số trong thông điệp Response và Request.
 * Quy định kết quả trả về trong thông điệp Response
-* Ví dụ như
+* Ví dụ về config phần Header của Response và Request
 
 ```tsx
 //....
@@ -155,11 +156,11 @@ API: https://abc.com.vn/server/list-banner
    * Phần `BASE_URL`: https://abc.com.vn/
    * Phần `API_BANNER`: server/list-banner
 
-3. *Bước 3:*: Thực hiện truy vấn
+3. *Bước 3:* Thực hiện truy vấn
 * Truyền tham số vào thông điệp để thực hiện truy vấn. 
 * Ngoài ra cũng sử dụng thêm các kiểu dữ liệu đi kèm với các tham số truyền vào.
 * Sử dụng thêm thư viện rxjs để dùng chức năng của httpObservable.
-* Ví dụ như
+* Ví dụ thực hiện truy vấn
 
 ```tsx
 public list = (bannerFilter: BannerFilter): Observable<Banner[]> => {

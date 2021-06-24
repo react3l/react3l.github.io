@@ -20,13 +20,16 @@ nav_order: 2
 
 ## Mục đích
 * Đảm nhiệm toàn bộ phần xử lý Logic Business trong ứng dụng.
-* Nhận dữ liệu về từ Repository sẽ được xử lý để phục trong tầng Service. Những thông tin sau khi được tầng Service xử lý có thể được truyền lên Repository để trả lại về Backend.
+* Nhận dữ liệu về từ Repository sẽ được xử lý để phục vụ trong tầng Service. Những thông tin sau khi được tầng Service xử lý có thể được truyền lên Repository để trả lại về Backend.
 
 ## Sử dụng
-* Mỗi chức năng sẽ được viết thành 1 function có thể truyền tham số hoặc không.
+* Mỗi chức năng sẽ được viết thành 1 function.
 * Đi kèm với tham số truyền vào sẽ cần kiểu dữ liệu tương ứng.
 * Kết quả trả về cũng cần phải được gán kiểu dữ liệu.
-* Ví dụ
+* Khi lấy dữ liệu trả về từ Repository
+   * Sử dụng Subscription để xử lý dữ liệu sau khi lấy được từ Observable
+   * Ngoài ra, Subsciption cũng sử dụng để có thể dễ dàng cancel quá trình tránh việc bị infinity loop
+* Ví dụ về sử dụng Service
 
 ```tsx
 //...
@@ -43,7 +46,7 @@ public useBanners(
  const [subscription] = commonService.useSubscription();
 
  const handleRefresh = React.useCallback(() => {
-   subscription.add(
+   subscription.add(    // Sử dụng Subscription
      list({...new BannerFilter(), take: DEFAULT_TAKE})
        .pipe(
          finalize(() => {
