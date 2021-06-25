@@ -19,7 +19,7 @@ nav_order: 1
 ---
 
 ## Atomic design
-![atomic_design](./atomic-design.png)
+![atomic_design](/assets/images/atomic-design.png)
 - Atomic design là một “phương pháp” thiết kế giao mà ở đó thiết kế được dựa trên việc phân tách và kết hợp các thành phần lại với nhau thay vì thiết kế toàn bộ.
 - Mục tiêu: Tạo nên các hệ thống thống nhất, bền vững và có tính tái sử dụng cao.
 - Các level trong atomic design bao gồm: Atoms, Molecules, Organisms, Templates, Pages/Screen.
