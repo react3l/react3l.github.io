@@ -8,7 +8,6 @@ parent: Database
 
 ## Active Record
 The **Active Record** pattern is an approach to access your database within your models. [Read more](https://en.wikipedia.org/wiki/Active_record_pattern).
-Example:
 ```ts
 // example how to save AR entity
     const categoryDAO = new CategoryDAO();
@@ -28,7 +27,6 @@ Example:
 
 ## Data Mapper
 **Data Mapper** is an approach to access your database within repositories instead of models. [Read more](https://en.wikipedia.org/wiki/Data_mapper_pattern).
-Example:
 ```ts
 const categoryDAORepository = connection.getRepository(CategoryDAO);
 
