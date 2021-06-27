@@ -47,8 +47,12 @@ const categoryDAORepository = connection.getRepository(CategoryDAO);
 ```
 
 ## Query Builder
-Query builder is used build complex SQL queries in an easy way. It is initialized from Connection method and QueryRunner objects. We can create QueryBuilder in three ways.
+**Query builder** is used build complex SQL queries in an easy way. It is initialized from Connection method and QueryRunner objects. 
+
+We can create QueryBuilder in three ways.
+
 **Connection**
+
 Consider a simple example of how to use QueryBuilder using connection method.
 ```ts
 import {getConnection} from 'typeorm/browser';
@@ -60,7 +64,9 @@ const category = await getConnection()
   .where('Category.id = :id', {id: 1})
   .getOne();
 ```
+
 **Entity manager**
+
 Let’s create a query builder using entity manager as follows −
 ```ts
 import {getManager} from 'typeorm/browser';
@@ -70,7 +76,9 @@ const category = await getManager()
   .where('Category.id = :id', {id: 1})
   .getOne();
 ```
+
 **Repository**
+
 We can use repository to create query builder. It is described below,
 ```ts
 import {getRepository} from 'typeorm/browser';
