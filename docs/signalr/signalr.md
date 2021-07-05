@@ -106,5 +106,21 @@ import * as signalR from '@microsoft/signalr';
     .withAutomaticReconnect() //will automatically try to reconnect
     .build();
 ```
-
-## Some common mistakes
+2. Send
+```ts
+await connection.send(
+      HUB_SEND,
+      globalState.user.endUserProfiles[0].id.toString(), // endUserProfileId
+      entity, //name entity send to signalr
+      JSON.stringify(data), 
+    );
+```
+3. Receive
+```ts
+connection.on(HUB_RECEIVE, (entity, data) => {
+        const list = JSON.parse(data);
+        switch (entity) {
+          // TODO
+        }
+      });
+```
