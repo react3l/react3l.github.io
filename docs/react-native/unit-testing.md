@@ -13,9 +13,7 @@ nav_order: 2
 ## Installation
 ```ts
 npm install --save-dev @testing-library/react-native
-
 # or
-
 yarn add --dev @testing-library/react-native
 ```
 
@@ -23,9 +21,7 @@ yarn add --dev @testing-library/react-native
 In order to use additional React Native-specific jest matchers from `@testing-library/jest-native` package add it to your project:
 ```ts
 npm install --save-dev @testing-library/jest-native
-
 # or
-
 yarn add --dev @testing-library/jest-native
 ```
 ### Custom Jest Preset
@@ -65,16 +61,78 @@ Note for Flow users – you'll also need to install typings for `react-test-rend
 ```ts
 flow-typed install react-test-renderer
 ```
-
+### Writing unit tests in TypeScript
+```ts
+  npm install --save @types/jest
+  # or
+  yarn add @types/jest
+```
 ---
 ## How to write unit tests?
 1. Identify the object to be test.
 2. Create a file containing the test code.
 3. Define Input, Output.
 4. Proceed to write test code for the defined object.
-5. Execute the ` $ yarn test ` command to run the unit test code.
+5. Run `$ yarn test` or `$ npm run test`.
 
-## Example
+## How to write tests for functions?
+1. Define a function to test.
+2. Create a file or choose an existing file that will contain our actual test.
+3. Determine the input and output values of the function.
+4. Compare the actual output value with the expected output value returned.
+
+
+Let's get started by writing a test for a hypothetical function that adds two numbers. First, create a `mathUntils.ts` file:
+```ts
+const sum = ( x: number, y:number ) => {
+    return x+y;
+}
+export {
+    sum
+}
+```
+Then, create a file named `mathUntils.test.ts`. This will contain our actual test:
+```ts
+import { sum } from '../../functions/mathUntils';
+
+test('adds 1 + 4 to equal 5', async () => {
+    expect(sum(1,4)).toBe(5)
+});
+```
+Finally, run `$ yarn test` or `$ npm run test` and Jest will print this message:
+
+<div style="margin:20px 10px 10px 50px; width: 600px; "  markdown="1"> 
+
+  ![resul_message](/assets/images/resultTestF.jpg)
+
+</div>
+
+---
+Here is an example of testing Function with side effects, define one more function at `mathUntils.ts` file:
+```ts
+let isChanged = false; // defined is false
+
+const changeFlowerName = (name: string) => {
+    isChanged = true; // changes in value to true
+    return name;
+}
+```
+One more test case at `mathUntils.test.ts`:
+```ts
+test("test change", async () => {
+  const result = changeFlowerName("have changed");
+  console.log(isChanged);
+  expect(result).toBe("have changed")
+})
+```
+Finally, run `$ yarn test` or `$ npm run test` and Jest will print this message:
+<div style="margin:20px 10px 10px 50px; width: 600px; "  markdown="1"> 
+
+  ![resul_message](/assets/images/resultTestEF.jpg)
+
+</div>
+
+## Example Test a screen
 There is a piece of code that allows the user to enter the length and width of the rectangle. Then display the resulting rectangular area on the screen: 
 
 <div style="margin:20px 10px 10px 50px; width: 200px; "  markdown="1"> 
