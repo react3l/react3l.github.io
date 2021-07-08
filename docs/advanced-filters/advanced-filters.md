@@ -6,21 +6,67 @@ nav_order: 9
 
 # Advanced-Filters
 
-## Installation
+## Advanced-Filters là gì?
 
-- Add .npmrc:
+- Đây là 1 phần của React3l.
 
-```ts
+- Có thể hiểu Advanced-Filters là nâng cao của dạng filter thông thường. Bao gồm 5 loại chính: IdFilter, GuidFilter, DateFilter, NumberFilter, StringFilter.
+
+## Cài đặt
+
+npm
+
+```sh
+npm install @react3l/advanced-filters
+```
+
+yarn
+
+```sh
+yarn @react3l/advanced-filters
+```
+
+- Tạo file .npmrc và cấu hình:
+
+* Lưu ý nếu xảy ra lỗi 401 thì cần phải tạo token trên github và login bằng lệnh sau:
+
+```sh
+npm login --registry=https://npm.pkg.github.com
+```
+
+```sh
 @react3l:registry=https://npm.pkg.github.com
 ```
 
-- Note:
+## Một số khái niệm
 
-  Be careful with file .npmrc
+- equal: So sánh bằng.
+
+- notEqual: So sánh không bằng.
+
+- in: Lấy các phần tử nằm trong mảng.
+
+- notIn: Lấy các phần tử ngoài mảng.
+
+- greater: Lớn hơn.
+
+- greaterEqual: Lớn hơn hoặc bằng.
+
+- less: Nhở hơn.
+
+- lessEqual: Nhỏ hơn bằng bằng.
+
+- contain: Chứa (Thường dùng với StringFilter để biểu thị việc lấy tất cả dữ liệu có chứa được filter).
+
+- notContain: Không chứa (ngược lại với contain).
+
+- startWith: Bắt đầu với.
+
+- endWith: Kết thúc với.
 
 ## IdFilter
 
-For primary key in integer format
+Dành cho primary key với kiểu integer.
 
 ```ts
 export declare class IdFilter extends Filter {
@@ -36,8 +82,6 @@ export declare class IdFilter extends Filter {
 
 ## GuidFilter
 
-For primary key in GUID format
-
 ```ts
 export declare class GuidFilter extends Filter {
   equal?: string
@@ -52,7 +96,7 @@ export declare class GuidFilter extends Filter {
 
 ## DateFilter
 
-For date/time fields
+Dành cho dữ liệu kiểu date/time
 
 ```tsx
 import { Moment } from "moment"
@@ -74,7 +118,7 @@ export declare class DateFilter extends Filter {
 
 ## NumberFilter
 
-For number fields
+Dành cho dữ liệu kiểu number
 
 ```ts
 import { Filter, FilterType } from "Filter"
@@ -95,6 +139,8 @@ export declare class NumberFilter extends Filter {
 ```
 
 ## StringFilter
+
+Dành cho dữ liệu kiểu string
 
 ```tsx
 import { Filter, FilterType } from "Filter"
@@ -117,11 +163,9 @@ export declare class StringFilter extends Filter {
 }
 ```
 
-## Note:
-
-- In the project we can use together with listService.
-
 ## Example:
+
+Ví dụ này sử dụng kèm với listService để lấy ra danh sách dữ liệu có sử dụng filter.
 
 ```ts
 import {
