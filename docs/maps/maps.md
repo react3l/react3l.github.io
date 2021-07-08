@@ -6,11 +6,11 @@ nav_order: 8
 
 # Heremap with react native
 
-## Require
+## Yêu cầu
 
-- To use heremap requires app_id and app_code for both android and ios, this key will be generated when creating hereamap account
+- Để có thể sử dụng heremap thì yêu câuf cần có app_id và app_code cho cả android và ios, đây là key được tạo ra khi đăng ký tài khoản here map.
 
-## References
+## Tài liệu tham khảo
 
 https://github.com/goparrot/geocoder
 
@@ -18,13 +18,25 @@ https://www.npmjs.com/package/heremap
 
 https://github.com/Josh-ES/react-here-maps
 
-## Installation
+## Cài đặt cho cả android và ios
 
 ```sh
     $ npm i @goparrot/geocoder reflect-metadata axios
 ```
 
-## Usage
+## Sử dụng
+
+- Dưới đây là cách sử dụng các service cơ bản mà heremap cung cấp. Bạn có thể sử dụng bất cứ service nào mà heremap cung cấp như lấy vị trí, tính khoảng cách, lấy địa chỉ, ...
+
+- Để sử dụng HereMap bạn phải chỉ định nhà cung cấp dịch vụ là HereProvider với app_id và app_code tương ứng.
+
+```ts
+const provider: HereProvider = new HereProvider(
+  axios,
+  "YOUR_APP_ID",
+  "YOUR_APP_CODE"
+)
+```
 
 ```ts
 import "reflect-metadata"
@@ -112,7 +124,7 @@ geocoder.setLogger(logger)
 
 ## Special Geocoders and Providers
 
-- The ProviderAggregator is used to register several providers so that you can manualy decide which provider to use later on.
+- Bạn có thể tuỳ chọn nhà cung cấp dịch vụ ngoài Here.
 
 ```tsx
 import "reflect-metadata"
@@ -150,8 +162,6 @@ geocoder.registerProvider(new GoogleMapsProvider(axios, "YOUR_API_KEY"))
 })()
 ```
 
-- The ProviderAggregator's API is fluent, meaning you can write:
-
 ```ts
 const locations: Location[] = geocoder
   .registerProvider(new MyCustomProvider(axios))
@@ -161,13 +171,13 @@ const locations: Location[] = geocoder
   })
 ```
 
-- The using() method allows you to choose the provider to use by its class name. When you deal with multiple providers, you may want to choose one of them. The default behavior is to use the first one, but it can be annoying.
+- Phương thức using() cho phép bạn có thể chọn nhà cung cấp theo class name của nó. Mặc định là GoogleMapsProvider
 
-## Example
+## Giao diện
 
-- Display the map (There are different ways to display the map) in this tutorial using Mapview from react-native-maps.
+- Có nhiều cách khác nhau để hiển thị bản đồ cho người dùng. Trong hướng dẫn này sử dụng Mapview từ breact-native-maps..
 
-- The map used here is google map.
+- Map được sử dụng là google map.
 
 - Use `<Polyline /> ` to get route.
 
