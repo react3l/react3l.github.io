@@ -6,135 +6,205 @@ nav_order: 8
 
 # Heremap with react native
 
-## Tham khảo
+## Yêu cầu
 
-link: <https://www.npmjs.com/package/heremap>
+- Để có thể sử dụng heremap thì yêu câuf cần có app_id và app_code cho cả android và ios, đây là key được tạo ra khi đăng ký tài khoản here map.
 
-## Cài đặt
+## Tài liệu tham khảo
 
-- Cài đặt cơ bản theo link <https://www.npmjs.com/package/heremap>
+https://github.com/goparrot/geocoder
+
+https://www.npmjs.com/package/heremap
+
+https://github.com/Josh-ES/react-here-maps
+
+## Cài đặt cho cả android và ios
+
+```sh
+    $ npm i @goparrot/geocoder reflect-metadata axios
+```
 
 ## Sử dụng
 
-# Mô tả
+- Dưới đây là cách sử dụng các service cơ bản mà heremap cung cấp. Bạn có thể sử dụng bất cứ service nào mà heremap cung cấp như lấy vị trí, tính khoảng cách, lấy địa chỉ, ...
 
-- Cách sử dụng cơ bản đã được mô tả chi tiết theo link <https://www.npmjs.com/package/heremap>
-
-- Để sử dụng được heremap cần phải có app_id và app_code cho cả android và ios, key này sẽ được tạo khi tạo tài khoản hereamap
-
-- Dưới đây là hướng dẫn để có thể sử dụng heremap:
-
-1. Tạo repository:
-
-- Trong repository có nhiệm vụ gọi tới api tương ứng chức năng cần sử dụng của heremap.
-
-- Trước tiên phải config app_id và app_code nhằm xác thực với here map:
+- Để sử dụng HereMap bạn phải chỉ định nhà cung cấp dịch vụ là HereProvider với app_id và app_code tương ứng.
 
 ```ts
-hm.config({
-    app_id: YOUR APP_ID,
-    app_code: YOUR APP_CODE,
+const provider: HereProvider = new HereProvider(
+  axios,
+  "YOUR_APP_ID",
+  "YOUR_APP_CODE"
+)
+```
+
+```ts
+import "reflect-metadata"
+import {
+  Location,
+  Geocoder,
+  HereProvider,
+  LoggerInterface,
+} from "@goparrot/geocoder"
+import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios"
+
+// You can use any logger that fits the LoggerInterface
+const logger: LoggerInterface = console
+
+// Set timeout for all requests
+const axios: AxiosInstance = Axios.create({
+  timeout: 5000,
 })
+
+// You can log all requests
+axios.interceptors.request.use((request: AxiosRequestConfig) => {
+  logger.debug("api request", request)
+
+  return request
+})
+
+// You can log all responses
+axios.interceptors.response.use((response: AxiosResponse): AxiosResponse => {
+  logger.debug(`api response ${response.status}`, response.data)
+
+  return response
+})
+
+/**
+ * Caching adapter for axios. Store request results in a configurable store to prevent unneeded network requests.
+ * @link {https://github.com/RasCarlito/axios-cache-adapter}
+ */
+
+const provider: HereProvider = new HereProvider(
+  axios,
+  "YOUR_APP_ID",
+  "YOUR_APP_CODE"
+)
+
+const geocoder: Geocoder = new Geocoder(provider)
+geocoder.setLogger(logger)
+;(async () => {
+  try {
+    const locations: Location[] = await geocoder.geocode({
+      // accuracy: AccuracyEnum.HOUSE_NUMBER,
+      address: "1158 E 89th St, Chicago, IL 60619, USA",
+      countryCode: "US",
+      // postalCode: '60619',
+      // state: 'Illinois',
+      // stateCode: 'IL',
+      // city: 'Chicago',
+      // language: 'en', // default
+      // limit: 5, // default
+      // fillMissingQueryProperties: true, // default
+      withRaw: true, // default false
+    })
+
+    logger.info("locations", locations)
+  } catch (err) {
+    logger.error(err)
+  }
+
+  try {
+    const locations: Location[] = await geocoder.reverse({
+      // accuracy: AccuracyEnum.HOUSE_NUMBER,
+      lat: 41.7340186,
+      lon: -87.5960762,
+      countryCode: "US",
+      // language: 'en', // default
+      // limit: 5, // default
+      // withRaw: false, // default
+    })
+
+    console.info("locations", locations)
+  } catch (err) {
+    console.error(err)
+  }
+})()
 ```
 
-- Sau đó sẽ gọi tới api cần sử dụng theo chức năng mong muốn:
+## Special Geocoders and Providers
 
-Vd: Chức năng truyền vào vị trí latlng và lấy ra được địa chỉ ta sử dụng hàm 'reverseGeocode'
-
-```ts
-hm.reverseGeocode([coordinate.latitude, coordinate.longitude] as any)
-.then((response) => {
-return response;
-});
-```
-
-- response trả về có dạng:
-
-```json
-{
-    "location": {},
-    "address": {},
-    "body": {}
-}
-```
-
-2. Viết service để lấy dữ liệu cần thiết để sử dụng.
-
-3. Hiển thị map (Có nhiều các để hiển thị map khác nhau) trong bài này sử dụng Mapview từ react-native-maps.
-
-- Dưới đây là 1 ví dụ về việc hiển thị map và chỉ đường trên map bạn có thể đọc thêm từ tài liệu của react-native-maps.
-
-- Map được sử dụng ở đây là google map.
-
-- Việc định tuyến đường đi sử dụng api route của heremap và hiển thị thông qua <Polyline />
+- Bạn có thể tuỳ chọn nhà cung cấp dịch vụ ngoài Here.
 
 ```tsx
-    <>
-        <MapView
-            provider="google"
-            style={[styles.map, {width: SCREEN_WIDTH - 32}]}
-            initialRegion={selectedRegion}
-            region={selectedRegion}
-            showsMyLocationButton={false}
-            showsUserLocation={true}
-            showsBuildings={true}
-            showsCompass={true}
-            showsScale={true}
-            onLongPress={handleMapLongPress}
-            onMarkerDrag={handleMapLongPress} >
-            <Marker
-                coordinate={selectedRegion}
-                draggable={true}
-                title={store.address}
-            >
-            {Children}
-            </Marker>
-            <Polyline
-            coordinates={routeLocation.routeForMap}
-            strokeWidth={2}
-            strokeColor="red"
-            geodesic={true}
-        />
-        </MapView>
-    </>
+import "reflect-metadata"
+import Axios, { AxiosInstance } from "axios"
+import {
+  Location,
+  GoogleMapsProvider,
+  HereProvider,
+  ProviderAggregator,
+  MapQuestProvider,
+} from "@goparrot/geocoder"
+
+const axios: AxiosInstance = Axios.create({
+  timeout: 5000,
+})
+
+const geocoder: ProviderAggregator = new ProviderAggregator([
+  new MapQuestProvider(axios, "YOUR_API_KEY"),
+  new HereProvider(axios, "YOUR_APP_ID", "YOUR_APP_CODE"),
+])
+
+geocoder.registerProvider(new GoogleMapsProvider(axios, "YOUR_API_KEY"))
+;(async () => {
+  try {
+    const locations: Location[] = await geocoder
+      .using(GoogleMapsProvider)
+      .geocode({
+        address: "1158 E 89th St, Chicago, IL 60619, USA",
+      })
+
+    console.info(locations)
+  } catch (err) {
+    console.error(err)
+  }
+})()
 ```
-
-# Ví dụ
-
-- Trong bài hướng dẫn này, hướng dẫn 2 chức năng cơ bản, các chức năng khác tương tự:
-
-* Lấy địa chỉ khi truyền vào latlng:
-
-public async getLocationAddressByCoordinate(
-coordinate: GeoCoordinates,
-): Promise<any> {
-return hm
-.reverseGeocode([coordinate.latitude, coordinate.longitude] as any)
-.then((response) => {
-return response;
-});
-}
-
-- Chỉ đường:
-
-repository:
 
 ```ts
-
-public async route(
-location: GeoCoordinates,
-coordinate: GeoCoordinates,
-): Promise<any> {
-    return hm
-    .route([location.latitude, location.longitude], [
-    coordinate.latitude,
-    coordinate.longitude,
-    ] as any)
-    .then((response) => {
-    return response;
-    });
-}
-
+const locations: Location[] = geocoder
+  .registerProvider(new MyCustomProvider(axios))
+  .using(MyCustomProvider)
+  .geocode({
+    // ...
+  })
 ```
 
-- Lấy ra 1 mảng latlng sau đó kết hợp với <Polyline /> để vẽ ra tuyến đường từ điểm đầu tới điểm cuối
+- Phương thức using() cho phép bạn có thể chọn nhà cung cấp theo class name của nó. Mặc định là GoogleMapsProvider
+
+## Giao diện
+
+- Có nhiều cách khác nhau để hiển thị bản đồ cho người dùng. Trong hướng dẫn này sử dụng Mapview từ breact-native-maps..
+
+- Map được sử dụng là google map.
+
+- Use `<Polyline /> ` to get route.
+
+```tsx
+<>
+  <MapView
+    provider="google"
+    style={[styles.map, { width: SCREEN_WIDTH - 32 }]}
+    initialRegion={selectedRegion}
+    region={selectedRegion}
+    showsMyLocationButton={false}
+    showsUserLocation={true}
+    showsBuildings={true}
+    showsCompass={true}
+    showsScale={true}
+    onLongPress={handleMapLongPress}
+    onMarkerDrag={handleMapLongPress}
+  >
+    <Marker coordinate={selectedRegion} draggable={true} title={store.address}>
+      {Children}
+    </Marker>
+    <Polyline
+      coordinates={routeLocation.routeForMap}
+      strokeWidth={2}
+      strokeColor="red"
+      geodesic={true}
+    />
+  </MapView>
+</>
+```
